@@ -1,0 +1,10 @@
+﻿{
+	"id": "CreatureChat",
+	"name": "CreatureChat",
+	"version": "0.1.0",
+	"authors": "无悔的正义",
+	"description": "A tool that can create a dialog box that follows any item.",
+	"requirements": [ ],
+	"requirements_names": [],
+	"tags": [ "" ]
+}
