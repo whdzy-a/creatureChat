@@ -50,7 +50,7 @@ new CreatureChatTx(room, 0, player, "Dialogue content",
 |-----|----------|---------|
 | `<LINE>` | Line break in text | `"First line<LINE>Second line"` |
 | `<NEXT>` | Separate dialogue segments | `"Segment 1<NEXT>Segment 2"` |****
-
+More text-related features are in the planning stages!
 
 ## Parameter Reference
 
