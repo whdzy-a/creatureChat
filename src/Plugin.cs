@@ -33,7 +33,7 @@ namespace CreatureChat
             orig.Invoke(self, eu);
             if (!s && self.input[0].spec)
             {
-                //new CreatureChatTx(self.room, 0, self, "这是测试对话。<LINE>This is a test.<LINE><color#ff0000ff>Colorful!</colorend><LINE><shake1>Shaky</shakeend><wave3>Wawy</waveend>");
+                //new CreatureChatTx(self.room, 0, self, "这是测试对话。<LINE>This is a test.<LINE><color#ff0000ff>Colorful!</colorend><rainbow0.05>Rainbow!</rainbowend><LINE><shake1>Shaky</shakeend><wave3>Wawy</waveend>");
             }
         }
 

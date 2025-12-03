@@ -49,7 +49,7 @@ namespace CreatureChat
             public FLabel Owner;
             public FLabel FLabel;
             public Color Color;
-            public bool Rainbow;
+            public float Rainbow;
             public float Alpha;
             public float ShakeIntensity;
             public float WaveIntensity;
@@ -75,10 +75,15 @@ namespace CreatureChat
                 WaveCounter += Time.deltaTime*WaveSpeed;
                 if (Owner != null)
                 {
-                    if (Rainbow)
+                    if (Rainbow != 0)
                     {
+                        if (Color == Color.white)
+                        {
+                            Color = Color.red;
+                        }
                         Color.RGBToHSV(Color, out float H, out float S, out float V);
-                        Color = Color.HSVToRGB(H + 0.02f, S, V);
+                        H = Mathf.Clamp(H + Rainbow, 0, 1);
+                        Color = Color.HSVToRGB(H, S, V);
                     }
                     Owner.color = Color;
                     Owner.alpha = Alpha;
@@ -94,11 +99,10 @@ namespace CreatureChat
             public Color color;
             public float shake;
             public float wave;
-            public bool rainbow;
+            public float rainbow;
             public static CharStyle Default => new CharStyle
             {
-                color = Color.white,
-                rainbow = false
+                color = Color.white
             };
         }
 
@@ -757,7 +761,8 @@ namespace CreatureChat
                                     current.wave = w;
                                 break;
                             case "rainbow":
-                                current.rainbow = true;
+                                if (float.TryParse(arg, out float r))
+                                    current.rainbow = r;
                                 break;
                         }
                     }
