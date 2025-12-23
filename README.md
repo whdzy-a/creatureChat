@@ -50,10 +50,12 @@ new CreatureChatTx(room, 0, player, "Dialogue content",
 |-----|----------|---------|
 | `<LINE>` | Line break in text | `"First line<LINE>Second line"` |
 | `<NEXT>` | Separate dialogue segments | `"Segment 1<NEXT>Segment 2"` |****
-| `<color#rrggbbaa>` `<colorend>` |Change the color of the text| `<color#ff0000ff>This text will turn red<colorend>` |
-| `<shakeShakeIntensite>` `<shakeend>` |Make the text shake| `<shake1>This text will shake into 1 pixel<shakeend>` |
-| `<waveWaveIntensite>` `<Waveend>` |Make the text wave| `<waveWave3>This text will wave into 3 pixel<Waveend>` |
-| `<rainbowSpeed>` `<rainbowend>` |Change the color of the text according to the Speed(The speed can be in the negative direction)| `<rainbow0.05>Rainbow!</rainbowend>` |
+| `<color#rrggbbaa>` `</colorend>` |Change the color of the text| `<color#ff0000ff>This text will turn red<colorend>` |
+| `<shakeShakeIntensite>` `</shakeend>` |Make the text shake| `<shake1>This text will shake into 1 pixel<shakeend>` |
+| `<waveWaveIntensite>` `</Waveend>` |Make the text wave| `<waveWave3>This text will wave into 3 pixel<Waveend>` |
+| `<rainbowSpeed>` `</rainbowend>` |Change the color of the text according to the Speed(The speed can be in the negative direction)| `<rainbow0.05>Rainbow!</rainbowend>` |
+| `<horizontalPixel>` `</horizontalend>` |Move the text horizontally| `<horizontal5>This text will move horizontally 5 pixels </horizontalend>` |
+| `<verticalPixel>` `</verticalend>` |Move the text vertically| `<vertical5>This text will move vertically 5 pixels </verticalend>` |
 More text-related features are in the planning stages!
 
 ## Parameter Reference
