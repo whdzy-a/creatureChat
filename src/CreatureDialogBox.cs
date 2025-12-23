@@ -49,6 +49,7 @@ namespace CreatureChat
             public FLabel Owner;
             public FLabel FLabel;
             public Color Color;
+            public Vector2 offset;
             public float Rainbow;
             public float Alpha;
             public float ShakeIntensity;
@@ -67,6 +68,7 @@ namespace CreatureChat
                 WaveIntensity = 0;
                 WaveSpeed = 5;
                 WaveDensity = 15;
+                offset = Vector2.zero;
                 FLabel = fLabel;
             }
 
@@ -87,6 +89,8 @@ namespace CreatureChat
                     }
                     Owner.color = Color;
                     Owner.alpha = Alpha;
+                    Owner.x += offset.x; 
+                    Owner.y += offset.y;
                     Owner.y += Mathf.Sin((Owner.x - FLabel.x)/ WaveDensity + WaveCounter) * WaveIntensity;
                     Owner.x += Random.Range(-ShakeIntensity, ShakeIntensity);
                     Owner.y += Random.Range(-ShakeIntensity, ShakeIntensity);
@@ -100,9 +104,11 @@ namespace CreatureChat
             public float shake;
             public float wave;
             public float rainbow;
+            public Vector2 offset;
             public static CharStyle Default => new CharStyle
             {
-                color = Color.white
+                color = Color.white,
+                offset = Vector2.zero
             };
         }
 
@@ -248,7 +254,7 @@ namespace CreatureChat
             }
             else
             {
-                if (hud.owner.GetOwnerType() == HUD.HUD.OwnerType.Player && (hud.owner as Player).abstractCreature.world.game.pauseMenu != null)
+                if (hud.owner != null && hud.owner.GetOwnerType() == HUD.HUD.OwnerType.Player && (hud.owner as Player).abstractCreature.world.game.pauseMenu != null)
                 {
                     return;
                 }
@@ -271,9 +277,16 @@ namespace CreatureChat
                 }
                 else
                 {
-                    if (hud.owner.GetOwnerType() != HUD.HUD.OwnerType.Player || (hud.owner as Player).abstractCreature.world.game.pauseMenu == null)
+                    if (hud.owner != null)
                     {
-                        lingerCounter++;
+                        if (hud.owner.GetOwnerType() != HUD.HUD.OwnerType.Player || (hud.owner as Player).abstractCreature.world.game.pauseMenu == null)
+                        {
+                            lingerCounter++;
+                        }
+                    }
+                    else
+                    {
+                            lingerCounter++;
                     }
 
                     if (lingerCounter > CurrentMessage.linger)
@@ -294,7 +307,7 @@ namespace CreatureChat
                     }
                 }
 
-                if (ShowingAMessage && hud.owner.GetOwnerType() == HUD.HUD.OwnerType.Player && (hud.owner as Player).graphicsModule != null && (hud.owner as Player).abstractCreature.world.game.IsStorySession && (hud.owner as Player).abstractCreature.world.game.GetStorySession.saveState.deathPersistentSaveData.theMark)
+                if (hud.owner != null && ShowingAMessage && hud.owner.GetOwnerType() == HUD.HUD.OwnerType.Player && (hud.owner as Player).graphicsModule != null && (hud.owner as Player).abstractCreature.world.game.IsStorySession && (hud.owner as Player).abstractCreature.world.game.GetStorySession.saveState.deathPersistentSaveData.theMark)
                 {
                     ((hud.owner as Player).graphicsModule as PlayerGraphics).markBaseAlpha = Mathf.Min(1f, ((hud.owner as Player).graphicsModule as PlayerGraphics).markBaseAlpha + 0.005f);
                     ((hud.owner as Player).graphicsModule as PlayerGraphics).markAlpha = Mathf.Min(0.5f + UnityEngine.Random.value, 1f);
@@ -366,7 +379,7 @@ namespace CreatureChat
         public static string StripTags(string raw)
         {
             if (string.IsNullOrEmpty(raw)) return raw;
-            return Regex.Replace(raw, @"</?(color|shake|rainbow|wave)[^>]*>", "", RegexOptions.IgnoreCase);
+            return Regex.Replace(raw, @"</?(color|shake|rainbow|wave|horizontal|vertical)[^>]*>", "", RegexOptions.IgnoreCase);
         }
         public void InitiateSprites()
         {
@@ -446,7 +459,8 @@ namespace CreatureChat
                     Color = style.color,
                     ShakeIntensity = style.shake,
                     WaveIntensity = style.wave,
-                    Rainbow = style.rainbow
+                    Rainbow = style.rainbow,
+                    offset = style.offset
                 };
                 charactorEffects.Add(fx);
             }
@@ -592,6 +606,25 @@ namespace CreatureChat
                     }
                 }
 
+                try
+                {
+                    if ((hud.owner as PhysicalObject).room == null || chatter.room == null || (hud.owner as PhysicalObject).room != chatter.room)
+                    {
+                        for (int i = 0; i < sprites.Length; i++)
+                        {
+                            sprites[i].isVisible = false;
+                        }
+                        for (int i = 0; i < charactors.Count; i++)
+                        {
+                            charactors[i].isVisible = false;
+                        }
+                        label.isVisible = false;
+                    }
+                }
+                catch
+                {
+
+                }
             }
         }
         public void EndCurrentMessageNow()
@@ -717,7 +750,7 @@ namespace CreatureChat
         public static class StyleParser
         {
             private static readonly Regex tagRegex = new Regex(
-                @"<(/?)(color|shake|rainbow|wave)([^>]*)>", RegexOptions.IgnoreCase);
+                @"<(/?)(color|shake|rainbow|wave|horizontal|vertical)([^>]*)>", RegexOptions.IgnoreCase);
 
             public static List<(char c, CharStyle style)> Parse(string raw)
             {
@@ -763,6 +796,14 @@ namespace CreatureChat
                             case "rainbow":
                                 if (float.TryParse(arg, out float r))
                                     current.rainbow = r;
+                                break;
+                            case "horizontal":
+                                if (float.TryParse(arg, out float hor))
+                                    current.offset.x = hor;
+                                break;
+                            case "vertical":
+                                if (float.TryParse(arg, out float ver))
+                                    current.offset.y = ver;
                                 break;
                         }
                     }

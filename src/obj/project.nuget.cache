@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "x08y4Il+0shn+7aYirENuD5UL40VRi5jn8Xr0fA5d/ShJ27q2tkAwgXW12jc+9TjOn2mXEHQCrPmZ3nBysdyXg==",
+  "dgSpecHash": "vVSkJcRZfgtlKOAXtl2M8Qi3mePtAV0K7LD1rt8AGrIldHopQXqj9x1UTm8Xaj9qitJHOzQ6DyidfpAWk3qOow==",
   "success": true,
-  "projectFilePath": "C:\\Users\\33299\\Desktop\\CreatureChat\\src\\CreatureChat.csproj",
+  "projectFilePath": "C:\\Users\\33299\\Desktop\\雨世界模组\\CreatureChat\\src\\CreatureChat.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\33299\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\10.0.0\\microsoft.bcl.asyncinterfaces.10.0.0.nupkg.sha512",
     "C:\\Users\\33299\\.nuget\\packages\\system.buffers\\4.6.1\\system.buffers.4.6.1.nupkg.sha512",
